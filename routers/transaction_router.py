@@ -9,7 +9,7 @@ from models.transaction_models import TransactionIn, TransactionOut
 
 router = APIRouter()
 
-@router.put("/user/transaction/", response_model=TransactionOut)
+@router.put("https://stocpoolt-cajero-backend.herokuapp.com/user/transaction/", response_model=TransactionOut)
 async def make_transaction(transaction_in: TransactionIn, session: Session = Depends(get_db)):
     user_in_db = session.query(UserInDB).get(transaction_in.username)
 

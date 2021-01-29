@@ -9,7 +9,7 @@ from models.transaction_models import TransactionIn, TransactionOut
 
 router = APIRouter()
 
-@router.post("/user/auth/")
+@router.post("https://stocpoolt-cajero-backend.herokuapp.com/user/auth/")
 async def auth_user(user_in: UserIn, db: Session = Depends(get_db)):
 
     user_in_db = db.query(UserInDB).get(user_in.username)
