@@ -22,19 +22,10 @@ async def make_transaction(transaction_in: TransactionIn, session: Session = Dep
                             detail="No se tienen los fondos suficientes")
 
     user_in_db.balance = user_in_db.balance - transaction_in.value
-
-    # Vamos a actualizar en la db
     session.commit()
-
-    # Actualiza la sesión que tenemos creada
     session.refresh(user_in_db)
-
     transaction_in_db = TransactionInDB(**transaction_in.dict(), actual_balance = user_in_db.balance)
-
-    # Como queremos agregar un nuevo valor a la bd,
-    # debemos insertarle el elemento a nuestra sesión
     session.add(transaction_in_db)
     session.commit()
     session.refresh(transaction_in_db)
-
     return  transaction_in_db
