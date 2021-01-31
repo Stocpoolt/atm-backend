@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 #Creando Motor y Conexion con la Base de Datos
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:EYKjuk83@localhost:5432/MISION-TIC"
+SQLALCHEMY_DATABASE_URL = "postgresql://pfmgsthduacgul:33f4730a1f02534aa6430ab33ba98bcdf92ca37d9fd8a2a353621d2834510941@ec2-34-232-24-202.compute-1.amazonaws.com:5432/d28bq97v9om3l5"
 engine                  = create_engine(SQLALCHEMY_DATABASE_URL)
 
 #Creacion de la Sesion
@@ -23,4 +23,4 @@ def get_db():
 Base = declarative_base()
 
 # en la base de datos
-Base.metadata.schema = "cajerodb"
+Base.metadata.schema = "atmdb"
