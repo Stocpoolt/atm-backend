@@ -10,8 +10,9 @@ from models.transaction_models import TransactionIn, TransactionOut
 router = APIRouter()
 
 @router.put("/user/transaction/", response_model=TransactionOut)
-async def make_transaction(transaction_in: TransactionIn, session: Session = Depends(get_db)):
-    user_in_db = session.query(UserInDB).get(transaction_in.username)
+async def make_transaction(transaction_in: TransactionIn,
+                           db: Session = Depends(get_db)):
+    user_in_db = db.query(UserInDB).get(transaction_in.username)
 
     if user_in_db == None:
         raise HTTPException(status_code=404,
@@ -22,10 +23,11 @@ async def make_transaction(transaction_in: TransactionIn, session: Session = Dep
                             detail="No se tienen los fondos suficientes")
 
     user_in_db.balance = user_in_db.balance - transaction_in.value
-    session.commit()
-    session.refresh(user_in_db)
+    db.commit()
+    db.refresh(user_in_db)
     transaction_in_db = TransactionInDB(**transaction_in.dict(), actual_balance = user_in_db.balance)
-    session.add(transaction_in_db)
-    session.commit()
-    session.refresh(transaction_in_db)
+    db.add(transaction_in_db)
+    db.commit()
+    db.refresh(transaction_in_db)
+    
     return  transaction_in_db
